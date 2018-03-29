@@ -1,0 +1,4 @@
+start_node: 810183
+end_node: 1083393
+diameter: 865
+time: 327.7564969062805

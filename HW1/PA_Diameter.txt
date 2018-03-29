@@ -1,0 +1,4 @@
+start_node: 852940
+end_node: 93526
+diameter: 794
+179.66237902641296
