@@ -1,0 +1,1391 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style type="text/css">
+    html, body {
+      font: 30pt arial;
+    }
+    #mynetwork {
+      width: 1500px;
+      height: 1200px;
+      border: 10px solid lightgray;
+    }
+    #loadingBar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width: 902px;
+            height: 902px;
+            background-color:rgba(200,200,200,0.8);
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            opacity:1;
+        }
+        #wrapper {
+            position:relative;
+            width:900px;
+            height:900px;
+        }
+
+        #text {
+            position:absolute;
+            top:8px;
+            left:530px;
+            width:30px;
+            height:50px;
+            margin:auto auto auto auto;
+            font-size:22px;
+            color: #000000;
+        }
+
+
+        div.outerBorder {
+            position:relative;
+            top:400px;
+            width:600px;
+            height:44px;
+            margin:auto auto auto auto;
+            border:8px solid rgba(0,0,0,0.1);
+            background: rgb(252,252,252); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+            border-radius:72px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+
+        #border {
+            position:absolute;
+            top:10px;
+            left:10px;
+            width:500px;
+            height:23px;
+            margin:auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+            border-radius:10px;
+        }
+
+        #bar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:20px;
+            height:20px;
+            margin:auto auto auto auto;
+            border-radius:11px;
+            border:2px solid rgba(30,30,30,0.05);
+            background: rgb(0, 173, 246); /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+        }
+  </style>
+
+  <script type="text/javascript" src="dist/vis.js"></script>
+  <link href="dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript">
+    var nodes = null;
+    var edges = null;
+    var network = null;
+
+    function draw() {
+      // create people.
+      // value corresponds with the age of the person
+      nodes = [
+  {
+    "id": "郭靖",
+    "label": "郭靖",
+    "value": 1000,
+    "group": 1,
+    "image": '3.jpg',
+    "shape": 'circularImage',
+    "size":2000,
+  },
+  {
+    "id": "黃蓉",
+    "label": "黃蓉",
+    "value": 1000,
+    "group": 2,
+    "image": '4.jpg',
+    "shape": 'circularImage',
+    "size":2000,
+  },
+  {
+    "id": "楊過",
+    "label": "楊過",
+    "value": 1000,
+    "group": 3,
+    "image": '1.jpg',
+    "shape": 'circularImage',
+    "size":2000,
+  },
+  {
+    "id": "小龍女",
+    "label": "小龍女",
+    "value": 1000,
+    "group": 4,
+    "image": '2.jpg',
+    "shape": 'circularImage',
+    "size":2000,
+  },
+  {
+    "id": "李莫愁",
+    "label": "李莫愁",
+    "value": 500,
+  },
+  {
+    "id": "歐陽鋒",
+    "label": "歐陽鋒",
+    "value": 500,
+  },
+  {
+    "id": "洪七公",
+    "label": "洪七公",
+    "value": 500,
+  },
+  {
+    "id": "黃藥師",
+    "label": "黃藥師",
+    "value": 500,
+  },
+  {
+    "id": "陸無雙",
+    "label": "陸無雙",
+    "value": 500,
+  },
+  {
+    "id": "郭襄",
+    "label": "郭襄",
+    "value": 500,
+  },
+  {
+    "id": "周伯通",
+    "label": "周伯通",
+    "value": 500,
+  },
+  {
+    "id": "金輪法王",
+    "label": "金輪法王",
+    "value": 500,
+  },
+  {
+    "id": "丘處機",
+    "label": "丘處機",
+    "value": 500,
+  },
+  {
+    "id": "歐陽克",
+    "label": "歐陽克",
+    "value": 500,
+  },
+  {
+    "id": "郭芙",
+    "label": "郭芙",
+    "value": 500,
+  },
+  {
+    "id": "梅超風",
+    "label": "梅超風",
+    "value": 500,
+  },
+  {
+    "id": "楊康",
+    "label": "楊康",
+    "value": 300,
+  },
+  {
+    "id": "柯鎮惡",
+    "label": "柯鎮惡",
+    "value": 500,
+  },
+  {
+    "id": "尹志平",
+    "label": "尹志平",
+    "value": 500,
+  },
+  {
+    "id": "趙志敬",
+    "label": "趙志敬",
+    "value": 100,
+  },
+  {
+    "id": "裘千尺",
+    "label": "裘千尺",
+    "value": 500,
+  },
+  {
+    "id": "程英",
+    "label": "程英",
+    "value": 500,
+  },
+  {
+    "id": "朱聰",
+    "label": "朱聰",
+    "value": 500,
+  },
+  {
+    "id": "完顏洪烈",
+    "label": "完顏洪烈",
+    "value": 500,
+  },
+  {
+    "id": "馬鈺",
+    "label": "馬鈺",
+    "value": 500,
+  },
+  {
+    "id": "裘千仞",
+    "label": "裘千仞",
+    "value": 500,
+  },
+  {
+    "id": "拖雷",
+    "label": "拖雷",
+    "value": 500,
+  },
+  {
+    "id": "公孫止",
+    "label": "公孫止",
+    "value": 500,
+  },
+  {
+    "id": "王處一",
+    "label": "王處一",
+    "value": 500,
+  },
+  {
+    "id": "瀟湘子",
+    "label": "瀟湘子",
+    "value": 500,
+  },
+  {
+    "id": "尹克西",
+    "label": "尹克西",
+    "value": 500,
+  },
+  {
+    "id": "孫婆婆",
+    "label": "孫婆婆",
+    "value": 500,
+  },
+  {
+    "id": "韓小瑩",
+    "label": "韓小瑩",
+    "value": 500,
+  },
+  {
+    "id": "霍都",
+    "label": "霍都",
+    "value": 500,
+  },
+  {
+    "id": "華箏",
+    "label": "華箏",
+    "value": 500,
+  },
+  {
+    "id": "一燈大師",
+    "label": "一燈大師",
+    "value": 500,
+  },
+  {
+    "id": "武修文",
+    "label": "武修文",
+    "value": 500,
+  },
+  {
+    "id": "武三通",
+    "label": "武三通",
+    "value": 500,
+  },
+  {
+    "id": "梁子翁",
+    "label": "梁子翁",
+    "value": 500,
+  },
+  {
+    "id": "尼摩星",
+    "label": "尼摩星",
+    "value": 500,
+  },
+  {
+    "id": "韓寶駒",
+    "label": "韓寶駒",
+    "value": 500,
+  },
+  {
+    "id": "武敦儒",
+    "label": "武敦儒",
+    "value": 500,
+  },
+  {
+    "id": "全金發",
+    "label": "全金發",
+    "value": 500,
+  },
+  {
+    "id": "穆念慈",
+    "label": "穆念慈",
+    "value": 500,
+  },
+  {
+    "id": "瑛姑",
+    "label": "瑛姑",
+    "value": 100,
+  },
+  {
+    "id": "達爾巴",
+    "label": "達爾巴",
+    "value": 500,
+  },
+  {
+    "id": "朱子柳",
+    "label": "朱子柳",
+    "value": 500,
+  },
+  {
+    "id": "魯有腳",
+    "label": "魯有腳",
+    "value": 500,
+  },
+  {
+    "id": "陸冠英",
+    "label": "陸冠英",
+    "value": 500,
+  },
+  {
+    "id": "耶律齊",
+    "label": "耶律齊",
+    "value": 500,
+  },
+  {
+    "id": "公孫綠萼",
+    "label": "公孫綠萼",
+    "value": 500,
+  }
+];
+
+      // create connections between people
+      // value corresponds with the amount of contact between two people
+      edges = [
+  {
+    "from": "郭靖",
+    "to": "黃蓉",
+    "value": 1007
+  },
+  {
+    "from": "楊過",
+    "to": "小龍女",
+    "value": 780
+  },
+  {
+    "from": "郭靖",
+    "to": "楊過",
+    "value": 265
+  },
+  {
+    "from": "郭靖",
+    "to": "歐陽鋒",
+    "value": 233
+  },
+  {
+    "from": "黃蓉",
+    "to": "楊過",
+    "value": 232
+  },
+  {
+    "from": "郭靖",
+    "to": "黃藥師",
+    "value": 223
+  },
+  {
+    "from": "郭靖",
+    "to": "洪七公",
+    "value": 221
+  },
+  {
+    "from": "楊過",
+    "to": "李莫愁",
+    "value": 205
+  },
+  {
+    "from": "黃蓉",
+    "to": "歐陽鋒",
+    "value": 204
+  },
+  {
+    "from": "黃蓉",
+    "to": "洪七公",
+    "value": 200
+  },
+  {
+    "from": "歐陽鋒",
+    "to": "洪七公",
+    "value": 199
+  },
+  {
+    "from": "郭靖",
+    "to": "周伯通",
+    "value": 169
+  },
+  {
+    "from": "楊過",
+    "to": "陸無雙",
+    "value": 163
+  },
+  {
+    "from": "楊過",
+    "to": "郭襄",
+    "value": 149
+  },
+  {
+    "from": "黃藥師",
+    "to": "歐陽鋒",
+    "value": 111
+  },
+  {
+    "from": "郭靖",
+    "to": "梅超風",
+    "value": 107
+  },
+  {
+    "from": "黃蓉",
+    "to": "黃藥師",
+    "value": 106
+  },
+  {
+    "from": "黃蓉",
+    "to": "歐陽克",
+    "value": 105
+  },
+  {
+    "from": "楊過",
+    "to": "金輪法王",
+    "value": 105
+  },
+  {
+    "from": "郭靖",
+    "to": "丘處機",
+    "value": 102
+  },
+  {
+    "from": "周伯通",
+    "to": "楊過",
+    "value": 100
+  },
+  {
+    "from": "郭靖",
+    "to": "拖雷",
+    "value": 93
+  },
+  {
+    "from": "黃藥師",
+    "to": "周伯通",
+    "value": 93
+  },
+  {
+    "from": "黃蓉",
+    "to": "周伯通",
+    "value": 89
+  },
+  {
+    "from": "郭靖",
+    "to": "裘千仞",
+    "value": 87
+  },
+  {
+    "from": "趙志敬",
+    "to": "楊過",
+    "value": 87
+  },
+  {
+    "from": "程英",
+    "to": "陸無雙",
+    "value": 87
+  },
+  {
+    "from": "黃藥師",
+    "to": "洪七公",
+    "value": 83
+  },
+  {
+    "from": "郭靖",
+    "to": "楊康",
+    "value": 80
+  },
+  {
+    "from": "尹志平",
+    "to": "趙志敬",
+    "value": 80
+  },
+  {
+    "from": "小龍女",
+    "to": "李莫愁",
+    "value": 80
+  },
+  {
+    "from": "裘千尺",
+    "to": "楊過",
+    "value": 79
+  },
+  {
+    "from": "楊過",
+    "to": "郭芙",
+    "value": 79
+  },
+  {
+    "from": "郭靖",
+    "to": "柯鎮惡",
+    "value": 77
+  },
+  {
+    "from": "郭靖",
+    "to": "華箏",
+    "value": 77
+  },
+  {
+    "from": "黃蓉",
+    "to": "小龍女",
+    "value": 76
+  },
+  {
+    "from": "郭靖",
+    "to": "歐陽克",
+    "value": 72
+  },
+  {
+    "from": "歐陽鋒",
+    "to": "周伯通",
+    "value": 71
+  },
+  {
+    "from": "歐陽鋒",
+    "to": "楊過",
+    "value": 68
+  },
+  {
+    "from": "黃蓉",
+    "to": "李莫愁",
+    "value": 67
+  },
+  {
+    "from": "黃蓉",
+    "to": "楊康",
+    "value": 66
+  },
+  {
+    "from": "黃蓉",
+    "to": "裘千仞",
+    "value": 66
+  },
+  {
+    "from": "洪七公",
+    "to": "歐陽克",
+    "value": 66
+  },
+  {
+    "from": "楊過",
+    "to": "公孫止",
+    "value": 64
+  },
+  {
+    "from": "楊過",
+    "to": "霍都",
+    "value": 62
+  },
+  {
+    "from": "楊過",
+    "to": "孫婆婆",
+    "value": 61
+  },
+  {
+    "from": "黃蓉",
+    "to": "瑛姑",
+    "value": 59
+  },
+  {
+    "from": "丘處機",
+    "to": "王處一",
+    "value": 59
+  },
+  {
+    "from": "郭靖",
+    "to": "朱聰",
+    "value": 58
+  },
+  {
+    "from": "黃藥師",
+    "to": "楊過",
+    "value": 58
+  },
+  {
+    "from": "黃蓉",
+    "to": "穆念慈",
+    "value": 57
+  },
+  {
+    "from": "瀟湘子",
+    "to": "尹克西",
+    "value": 57
+  },
+  {
+    "from": "黃蓉",
+    "to": "柯鎮惡",
+    "value": 56
+  },
+  {
+    "from": "黃蓉",
+    "to": "一燈大師",
+    "value": 56
+  },
+  {
+    "from": "丘處機",
+    "to": "馬鈺",
+    "value": 56
+  },
+  {
+    "from": "郭靖",
+    "to": "完顏洪烈",
+    "value": 55
+  },
+  {
+    "from": "陸冠英",
+    "to": "程瑤迦",
+    "value": 55
+  },
+  {
+    "from": "周伯通",
+    "to": "小龍女",
+    "value": 54
+  },
+  {
+    "from": "瀟湘子",
+    "to": "尼摩星",
+    "value": 54
+  },
+  {
+    "from": "郭靖",
+    "to": "梁子翁",
+    "value": 53
+  },
+  {
+    "from": "趙志敬",
+    "to": "小龍女",
+    "value": 52
+  },
+  {
+    "from": "裘千尺",
+    "to": "公孫止",
+    "value": 52
+  },
+  {
+    "from": "楊過",
+    "to": "程英",
+    "value": 52
+  },
+  {
+    "from": "李莫愁",
+    "to": "陸無雙",
+    "value": 52
+  },
+  {
+    "from": "楊過",
+    "to": "達爾巴",
+    "value": 51
+  },
+  {
+    "from": "楊過",
+    "to": "瀟湘子",
+    "value": 50
+  },
+  {
+    "from": "黃蓉",
+    "to": "郭襄",
+    "value": 48
+  },
+  {
+    "from": "郭靖",
+    "to": "瑛姑",
+    "value": 47
+  },
+  {
+    "from": "小龍女",
+    "to": "金輪法王",
+    "value": 47
+  },
+  {
+    "from": "楊康",
+    "to": "穆念慈",
+    "value": 45
+  },
+  {
+    "from": "黃藥師",
+    "to": "梅超風",
+    "value": 45
+  },
+  {
+    "from": "郭靖",
+    "to": "馬鈺",
+    "value": 44
+  },
+  {
+    "from": "洪七公",
+    "to": "周伯通",
+    "value": 44
+  },
+  {
+    "from": "郭靖",
+    "to": "王處一",
+    "value": 43
+  },
+  {
+    "from": "小龍女",
+    "to": "郭襄",
+    "value": 43
+  },
+  {
+    "from": "武敦儒",
+    "to": "武修文",
+    "value": 43
+  },
+  {
+    "from": "楊過",
+    "to": "樊一翁",
+    "value": 42
+  },
+  {
+    "from": "郭靖",
+    "to": "小龍女",
+    "value": 41
+  },
+  {
+    "from": "郭靖",
+    "to": "一燈大師",
+    "value": 41
+  },
+  {
+    "from": "黃蓉",
+    "to": "郭芙",
+    "value": 41
+  },
+  {
+    "from": "霍都",
+    "to": "達爾巴",
+    "value": 41
+  },
+  {
+    "from": "馬鈺",
+    "to": "王處一",
+    "value": 40
+  },
+  {
+    "from": "小龍女",
+    "to": "孫婆婆",
+    "value": 40
+  },
+  {
+    "from": "郭靖",
+    "to": "穆念慈",
+    "value": 39
+  },
+  {
+    "from": "黃蓉",
+    "to": "梅超風",
+    "value": 39
+  },
+  {
+    "from": "楊過",
+    "to": "武修文",
+    "value": 39
+  },
+  {
+    "from": "郭靖",
+    "to": "魯有腳",
+    "value": 38
+  },
+  {
+    "from": "郭靖",
+    "to": "哲別",
+    "value": 37
+  },
+  {
+    "from": "洪七公",
+    "to": "楊過",
+    "value": 37
+  },
+  {
+    "from": "周伯通",
+    "to": "瑛姑",
+    "value": 37
+  },
+  {
+    "from": "楊康",
+    "to": "完顏洪烈",
+    "value": 36
+  },
+  {
+    "from": "歐陽鋒",
+    "to": "完顏洪烈",
+    "value": 36
+  },
+  {
+    "from": "周伯通",
+    "to": "裘千仞",
+    "value": 36
+  },
+  {
+    "from": "丘處機",
+    "to": "朱聰",
+    "value": 36
+  },
+  {
+    "from": "黃蓉",
+    "to": "魯有腳",
+    "value": 35
+  },
+  {
+    "from": "柯鎮惡",
+    "to": "朱聰",
+    "value": 35
+  },
+  {
+    "from": "李莫愁",
+    "to": "洪凌波",
+    "value": 35
+  },
+  {
+    "from": "霍都",
+    "to": "朱子柳",
+    "value": 35
+  },
+  {
+    "from": "黃蓉",
+    "to": "金輪法王",
+    "value": 34
+  },
+  {
+    "from": "歐陽鋒",
+    "to": "柯鎮惡",
+    "value": 34
+  },
+  {
+    "from": "歐陽鋒",
+    "to": "裘千仞",
+    "value": 34
+  },
+  {
+    "from": "朱聰",
+    "to": "全金發",
+    "value": 34
+  },
+  {
+    "from": "楊過",
+    "to": "武三通",
+    "value": 34
+  },
+  {
+    "from": "楊過",
+    "to": "朱子柳",
+    "value": 34
+  },
+  {
+    "from": "楊過",
+    "to": "尼摩星",
+    "value": 34
+  },
+  {
+    "from": "楊康",
+    "to": "歐陽鋒",
+    "value": 33
+  },
+  {
+    "from": "黃藥師",
+    "to": "丘處機",
+    "value": 33
+  },
+  {
+    "from": "尹志平",
+    "to": "小龍女",
+    "value": 33
+  },
+  {
+    "from": "楊過",
+    "to": "武敦儒",
+    "value": 33
+  },
+  {
+    "from": "楊過",
+    "to": "尹克西",
+    "value": 33
+  },
+  {
+    "from": "郭靖",
+    "to": "尼摩星",
+    "value": 32
+  },
+  {
+    "from": "郭嘯天",
+    "to": "楊鐵心",
+    "value": 32
+  },
+  {
+    "from": "朱聰",
+    "to": "韓寶駒",
+    "value": 32
+  },
+  {
+    "from": "楊過",
+    "to": "公孫綠萼",
+    "value": 32
+  },
+  {
+    "from": "楊過",
+    "to": "耶律齊",
+    "value": 32
+  },
+  {
+    "from": "郭靖",
+    "to": "忽必烈",
+    "value": 31
+  },
+  {
+    "from": "黃蓉",
+    "to": "裘千尺",
+    "value": 31
+  },
+  {
+    "from": "歐陽鋒",
+    "to": "歐陽克",
+    "value": 31
+  },
+  {
+    "from": "丘處機",
+    "to": "柯鎮惡",
+    "value": 31
+  },
+  {
+    "from": "楊過",
+    "to": "洪凌波",
+    "value": 31
+  },
+  {
+    "from": "郭靖",
+    "to": "鐵木真",
+    "value": 30
+  },
+  {
+    "from": "楊康",
+    "to": "歐陽克",
+    "value": 30
+  },
+  {
+    "from": "黃藥師",
+    "to": "柯鎮惡",
+    "value": 30
+  },
+  {
+    "from": "小龍女",
+    "to": "公孫止",
+    "value": 30
+  },
+  {
+    "from": "郭靖",
+    "to": "韓寶駒",
+    "value": 29
+  },
+  {
+    "from": "楊鐵心",
+    "to": "包惜弱",
+    "value": 29
+  },
+  {
+    "from": "梅超風",
+    "to": "朱聰",
+    "value": 29
+  },
+  {
+    "from": "郭靖",
+    "to": "瀟湘子",
+    "value": 28
+  },
+  {
+    "from": "黃蓉",
+    "to": "霍都",
+    "value": 28
+  },
+  {
+    "from": "周伯通",
+    "to": "丘處機",
+    "value": 28
+  },
+  {
+    "from": "華箏",
+    "to": "拖雷",
+    "value": 28
+  },
+  {
+    "from": "尹克西",
+    "to": "尼摩星",
+    "value": 28
+  },
+  {
+    "from": "丘處機",
+    "to": "尹志平",
+    "value": 27
+  },
+  {
+    "from": "鐵木真",
+    "to": "哲別",
+    "value": 27
+  },
+  {
+    "from": "楊過",
+    "to": "一燈大師",
+    "value": 27
+  },
+  {
+    "from": "李莫愁",
+    "to": "武三通",
+    "value": 27
+  },
+  {
+    "from": "郭靖",
+    "to": "韓小瑩",
+    "value": 26
+  },
+  {
+    "from": "郭靖",
+    "to": "金輪法王",
+    "value": 26
+  },
+  {
+    "from": "黃蓉",
+    "to": "完顏洪烈",
+    "value": 25
+  },
+  {
+    "from": "黃蓉",
+    "to": "耶律齊",
+    "value": 25
+  },
+  {
+    "from": "黃蓉",
+    "to": "朱子柳",
+    "value": 25
+  },
+  {
+    "from": "丘處機",
+    "to": "楊過",
+    "value": 25
+  },
+  {
+    "from": "丘處機",
+    "to": "楊鐵心",
+    "value": 24
+  },
+  {
+    "from": "柯鎮惡",
+    "to": "楊過",
+    "value": 24
+  },
+  {
+    "from": "朱聰",
+    "to": "韓小瑩",
+    "value": 24
+  },
+  {
+    "from": "韓小瑩",
+    "to": "韓寶駒",
+    "value": 24
+  },
+  {
+    "from": "郭靖",
+    "to": "南希仁",
+    "value": 23
+  },
+  {
+    "from": "楊康",
+    "to": "丘處機",
+    "value": 23
+  },
+  {
+    "from": "丘處機",
+    "to": "郝大通",
+    "value": 23
+  },
+  {
+    "from": "李莫愁",
+    "to": "公孫止",
+    "value": 23
+  },
+  {
+    "from": "李莫愁",
+    "to": "耶律齊",
+    "value": 23
+  },
+  {
+    "from": "金輪法王",
+    "to": "達爾巴",
+    "value": 23
+  },
+  {
+    "from": "郭靖",
+    "to": "陸冠英",
+    "value": 22
+  },
+  {
+    "from": "郭靖",
+    "to": "趙志敬",
+    "value": 22
+  },
+  {
+    "from": "黃蓉",
+    "to": "梁子翁",
+    "value": 22
+  },
+  {
+    "from": "黃蓉",
+    "to": "武三通",
+    "value": 22
+  },
+  {
+    "from": "周伯通",
+    "to": "郭襄",
+    "value": 22
+  },
+  {
+    "from": "裘千仞",
+    "to": "瑛姑",
+    "value": 22
+  },
+  {
+    "from": "陳玄風",
+    "to": "梅超風",
+    "value": 22
+  },
+  {
+    "from": "郭芙",
+    "to": "郭襄",
+    "value": 22
+  },
+  {
+    "from": "郭芙",
+    "to": "耶律齊",
+    "value": 22
+  },
+  {
+    "from": "郭靖",
+    "to": "郭芙",
+    "value": 21
+  },
+  {
+    "from": "郭靖",
+    "to": "霍都",
+    "value": 21
+  },
+  {
+    "from": "黃藥師",
+    "to": "馬鈺",
+    "value": 21
+  },
+  {
+    "from": "歐陽鋒",
+    "to": "靈智上人",
+    "value": 21
+  },
+  {
+    "from": "周伯通",
+    "to": "趙志敬",
+    "value": 21
+  },
+  {
+    "from": "朱聰",
+    "to": "南希仁",
+    "value": 21
+  },
+  {
+    "from": "南希仁",
+    "to": "韓寶駒",
+    "value": 21
+  },
+  {
+    "from": "韓寶駒",
+    "to": "全金發",
+    "value": 21
+  },
+  {
+    "from": "楊過",
+    "to": "忽必烈",
+    "value": 21
+  },
+  {
+    "from": "小龍女",
+    "to": "陸無雙",
+    "value": 21
+  },
+  {
+    "from": "小龍女",
+    "to": "尼摩星",
+    "value": 21
+  },
+  {
+    "from": "李莫愁",
+    "to": "程英",
+    "value": 21
+  },
+  {
+    "from": "耶律齊",
+    "to": "武三通",
+    "value": 21
+  },
+  {
+    "from": "黃蓉",
+    "to": "陸冠英",
+    "value": 20
+  },
+  {
+    "from": "黃蓉",
+    "to": "公孫止",
+    "value": 20
+  },
+  {
+    "from": "穆念慈",
+    "to": "歐陽克",
+    "value": 20
+  },
+  {
+    "from": "丘處機",
+    "to": "小龍女",
+    "value": 20
+  },
+  {
+    "from": "韓小瑩",
+    "to": "全金發",
+    "value": 20
+  },
+  {
+    "from": "金輪法王",
+    "to": "瀟湘子",
+    "value": 20
+  }
+];
+
+      // Instantiate our network object.
+      var container = document.getElementById('mynetwork');
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {
+        nodes:  {
+          group :0,
+          shape: 'circular',
+          size : 1000,
+          scaling: 
+          {
+            label: 
+            {
+              enabled: true,
+              min: 25,
+              max: 40
+            },
+          },
+          "value": 10,
+          font: {
+                size: 30
+          },
+        shadow:true
+        },
+        physics:{
+        forceAtlas2Based: {
+            gravitationalConstant: -26,
+            centralGravity: 0.005,
+            springLength: 220,
+            springConstant: 0.18,
+            avoidOverlap : 0.6
+        },
+        maxVelocity: 146,
+        solver: 'forceAtlas2Based',
+        timestep: 0.35,
+        stabilization: {iterations: 1050}
+    },
+    edges: {
+        color: {inherit: 'from', highlight:'rgba(255,0,0,0.7)', opacity:0.1},
+      },
+    };
+      network = new vis.Network(container, data, options);
+      network.on("stabilizationProgress", function(params) {
+                var maxWidth = 496;
+                var minWidth = 20;
+                var widthFactor = params.iterations/params.total;
+                var width = Math.max(minWidth,maxWidth * widthFactor);
+
+                document.getElementById('bar').style.width = width + 'px';
+                document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+            });
+
+            network.once("stabilizationIterationsDone", function() {
+                document.getElementById('text').innerHTML = '100%';
+                document.getElementById('bar').style.width = '496px';
+                document.getElementById('loadingBar').style.opacity = 0;
+                // really clean the dom element
+                setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 1050);
+            });
+            network.fit();
+            network.on( 'click', function(properties) {
+            var ids = properties.nodes;
+            var nodesnew = network.getConnectedNodes(ids);
+            var edgesnew = network.getConnectedEdges(ids);
+            
+        });
+
+    }
+
+    function myFunction() 
+    {
+              var nodesnew = network.selectNodes([document.getElementById("myText").value], true);
+              var pos = network.getPositions(document.getElementById("myText").value);
+              // var options = {
+              //       position: {x:pos[document.getElementById("myText").value].x,y:pos[document.getElementById("myText").value].y},
+              //       scale: 1.0,
+              //       offset: {x:0,y:0},
+              //       animation: 
+              //       {             // animation object, can also be Boolean
+              //           duration: 1000,                 // animation duration in milliseconds (Number)
+              //           easingFunction: "easeInOutQuad" // Animation easing function, available are:
+              //       }         
+              // };
+
+              //network.moveTo({options});
+
+              
+              network.fit({
+                nodes: [document.getElementById("myText").value]
+             });
+    }
+
+  </script>
+  
+</head>
+<body onload="draw()">
+<div id="mynetwork"></div>
+<div id="loadingBar">
+        <div class="outerBorder">
+            <div id="text">0%</div>
+            <div id="border">
+                <div id="bar"></div>
+            </div>
+        </div>
+</div>
+角色: <input type="text" id="myText">
+<button onclick="myFunction()">搜尋！</button>
+
+</body>
+</html>

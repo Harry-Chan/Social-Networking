@@ -1,0 +1,5 @@
+出現次數的bar
+diameter
+avg degree
+acc
+分布
